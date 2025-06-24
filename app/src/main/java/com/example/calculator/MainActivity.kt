@@ -14,9 +14,9 @@ class MainActivity : AppCompatActivity() {
     lateinit var etNum1: EditText
     lateinit var etNum2: EditText
     lateinit var btnAdd: Button
-    lateinit var  btnSubtract: Button
-    lateinit var  btnMultiply: Button
-    lateinit var  btnDivide: Button
+    lateinit var btnSubtract: Button
+    lateinit var btnMultiply: Button
+    lateinit var btnDivide: Button
     lateinit var tvResult: TextView
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -44,35 +44,48 @@ class MainActivity : AppCompatActivity() {
     override fun onResume(){
         super.onResume()
         btnAdd.setOnClickListener(){
-            var num1 = etNum1.text.toString()
-            var num2 = etNum2.text.toString()
+        obtainValues("+")
 
-            var sum = num1.toInt() + num2.toInt()
-            tvResult.text = sum.toString()
         }
 
         btnSubtract.setOnClickListener(){
-            var num1 = etNum1.text.toString()
-            var num2 = etNum2.text.toString()
+       obtainValues("-")
 
-            var subtract = num1.toInt() - num2.toInt()
-            tvResult.text = subtract.toString()
         }
 
         btnDivide.setOnClickListener(){
-            var num1 = etNum1.text.toString()
-            var num2 = etNum2.text.toString()
+         obtainValues("/")
 
-            var divide = num1.toInt() / num2.toInt()
-            tvResult.text = divide.toString()
         }
 
         btnMultiply.setOnClickListener(){
-            var num1 = etNum1.text.toString()
-            var num2 = etNum2.text.toString()
+       obtainValues("*")
 
-            var multiply = num1.toInt() * num2.toInt()
-            tvResult.text = multiply.toString()
         }
+    }
+
+    fun obtainValues(symbol: String) {
+        val num1 = etNum1.text.toString()
+        val num2 = etNum2.text.toString()
+
+        if (num1.isBlank()){
+            etNum1.error = "Num 1 is required"
+            return
+        }
+
+        if(num2.isBlank()){
+            etNum2.error = "Num 2 is required"
+            return
+        }
+        val result = when(symbol){
+            "+" ->num1.toDouble() + num2.toInt()
+            "-" -> num1.toDouble() - num2.toInt()
+            "*" -> num1.toDouble() * num2.toInt()
+            "/" ->  num1.toDouble() / num2.toInt()
+
+            else -> return
+        }
+        tvResult.text = result.toString()
+
     }
 }
